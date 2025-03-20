@@ -1,14 +1,22 @@
-import './assets/main.css'
-
 import { createApp } from 'vue'
-import { createPinia } from 'pinia'
+import './assets/main.css'
+import { useApplicationService } from './modules/core/application/service/application.service'
+import { useConfigFile } from './modules/core/application/service/config.service'
+import ErrorApp from '@/modules/core/presentation/views/ErrorApp.vue'
 
-import App from './App.vue'
-import router from './router'
+useConfigFile()
+  .initConfig()
+  .then((response) => {
+    if (!response || typeof response === 'string') {
+      mountErrorApp('Cannot start Application ::: ' + response)
+    } else {
+      useApplicationService().initApplication(response)
+    }
+  })
 
-const app = createApp(App)
+function mountErrorApp(reason: string) {
+  const app = createApp(ErrorApp)
 
-app.use(createPinia())
-app.use(router)
-
-app.mount('#app')
+  app.provide<string>('reason', reason)
+  app.mount('#app')
+}
