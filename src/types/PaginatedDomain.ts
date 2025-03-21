@@ -1,5 +1,5 @@
-import type { Domain } from './domain'
-import type { Pagination } from './pagination'
+import type { Domain } from './Domain'
+import type { Pagination } from './Pagination'
 
 export type PaginatedDomain = {
   content: Domain[]

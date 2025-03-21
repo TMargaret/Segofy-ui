@@ -13,7 +13,7 @@ export function useConfigFile() {
       if (applicationEnv) {
         if (applicationEnv.URL === 'localhost') {
           return {
-            apiUrl: 'http://localhost:3000/api',
+            apiUrl: 'https://segofy.com/api',
           }
         } else {
           const initSettingsResponse = (await useConfigHttp.loadConfig(applicationEnv)).data

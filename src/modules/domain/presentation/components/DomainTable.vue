@@ -1,6 +1,13 @@
 <script lang="ts" setup>
+import { useDomainService } from '@/modules/domain/application/service/domain.service';
+import { useDomainStore } from '@/modules/domain/infrastructure/store/domain.store';
 import { AgGridVue } from 'ag-grid-vue3';
-import { ref } from 'vue';
+import { storeToRefs } from 'pinia';
+import { onMounted, ref } from 'vue';
+
+const { loadDomains } = useDomainService()
+const domainStore = useDomainStore()
+const { domains } = storeToRefs(domainStore)
 
 const rowData = ref([
   { make: "Tesla", model: "Model Y", price: 64950, electric: true },
@@ -17,6 +24,8 @@ const colDefs = ref([
   { field: "Username" },
   { field: "Actions" }
 ]);
+
+onMounted(() => loadDomains())
 </script>
 
 <template>
@@ -24,6 +33,4 @@ const colDefs = ref([
   </ag-grid-vue>
 </template>
 
-<style scoped>
-.container {}
-</style>
+<style scoped></style>
